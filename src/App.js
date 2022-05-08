@@ -1,22 +1,14 @@
-import {useEffect, useState} from 'react';
+import {useCallback} from 'react';
 
 function App() {
   
-  const [current, setCurrent] = useState(() => new Date());
-  
-  useEffect(() => {
-    console.log('render');
-  });
-  
-  useEffect(() => {
-    setTimeout(() => {
-      setCurrent(() => new Date());
-    }, 1000);
-  }, [current]);
+  const eventListener = useCallback(() => {
+    alert('clicked');
+  }, []);
   
   return (
     <h1>
-      {current.toLocaleTimeString()}
+      <button onClick={eventListener}>Click Me</button>
     </h1>
   );
 }
