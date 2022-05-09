@@ -1,14 +1,10 @@
-import {useCallback} from 'react';
-
 function App() {
   
-  const eventListener = useCallback(() => {
-    alert('clicked');
-  }, []);
+  const isLoggedIn = false;
   
   return (
     <h1>
-      <button onClick={eventListener}>Click Me</button>
+      {isLoggedIn ? 'Welcome' : 'Please sign up'}
     </h1>
   );
 }
