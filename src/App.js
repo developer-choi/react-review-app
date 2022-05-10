@@ -1,11 +1,13 @@
 function App() {
   
-  const isLoggedIn = false;
+  const numbers = [1, 2, 3, 4, 5]
   
   return (
-    <h1>
-      {isLoggedIn ? 'Welcome' : 'Please sign up'}
-    </h1>
+    <div>
+      {numbers.map(number => (
+        <p key={number}>{number}</p>
+      ))}
+    </div>
   );
 }
 
