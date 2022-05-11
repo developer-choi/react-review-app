@@ -1,13 +1,28 @@
+import React, {useCallback, useState} from 'react';
+
 function App() {
   
-  const numbers = [1, 2, 3, 4, 5]
+  const [name, setName] = useState('');
+  
+  const handleSubmit = useCallback(event => {
+    event.preventDefault();
+  
+    if (name === '') {
+      alert('Please write your name');
+    } else {
+      alert('Success');
+    }
+    
+  }, [name]);
+  
+  const handleChange = useCallback(event => {
+    setName(event.target.value);
+  }, []);
   
   return (
-    <div>
-      {numbers.map(number => (
-        <p key={number}>{number}</p>
-      ))}
-    </div>
+    <form onSubmit={handleSubmit}>
+      <input value={name} onChange={handleChange} placeholder="Write your name"/>
+    </form>
   );
 }
 
