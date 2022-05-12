@@ -1,29 +1,33 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 function App() {
   
-  const [name, setName] = useState('');
+  const forceReRender = useForceReRender();
   
-  const handleSubmit = useCallback(event => {
-    event.preventDefault();
+  const [state1] = useState(0);
   
-    if (name === '') {
-      alert('Please write your name');
-    } else {
-      alert('Success');
-    }
-    
-  }, [name]);
+  console.log('re-rendering');
   
-  const handleChange = useCallback(event => {
-    setName(event.target.value);
-  }, []);
+  const [state2] = useState(() => {
+    console.log('initial state 2');
+    return 2;
+  });
+  
+  useEffect(() => {
+    console.log(state1);
+    console.log(state2);
+  });
   
   return (
-    <form onSubmit={handleSubmit}>
-      <input value={name} onChange={handleChange} placeholder="Write your name"/>
-    </form>
+    <button onClick={forceReRender}>Force Re-render</button>
   );
+}
+
+function useForceReRender() {
+  const [, setBool] = useState(false);
+  return useCallback(() => {
+    setBool(bool => !bool);
+  }, []);
 }
 
 export default App;
