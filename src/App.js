@@ -2,24 +2,28 @@ import React, {useCallback, useEffect, useState} from 'react';
 
 function App() {
   
+  const [clickCount, setClickCount] = useState(0);
+  
+  const addCount = useCallback(() => {
+    setClickCount(prevState => prevState + 1);
+  }, []);
+  
   const forceReRender = useForceReRender();
   
-  const [state1] = useState(0);
-  
-  console.log('re-rendering');
-  
-  const [state2] = useState(() => {
-    console.log('initial state 2');
-    return 2;
-  });
+  useEffect(() => {
+    console.log('useEffect (with deps) -- clickCount', clickCount);
+  }, [clickCount]);
   
   useEffect(() => {
-    console.log(state1);
-    console.log(state2);
+    console.log('useEffect (without deps)-- clickCount', clickCount);
   });
   
   return (
-    <button onClick={forceReRender}>Force Re-render</button>
+    <>
+      <button onClick={forceReRender}>Force Re-render</button>
+      <button onClick={addCount}>Add count</button>
+      <span>clockCount : {clickCount}</span>
+    </>
   );
 }
 
