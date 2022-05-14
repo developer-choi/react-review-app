@@ -2,28 +2,26 @@ import React, {useCallback, useEffect, useState} from 'react';
 
 function App() {
   
-  const [clickCount, setClickCount] = useState(0);
+  const memoizedFunction = useCallback(() => {
   
-  const addCount = useCallback(() => {
-    setClickCount(prevState => prevState + 1);
   }, []);
+  
+  const generalFunction = () => {
+  
+  };
   
   const forceReRender = useForceReRender();
   
   useEffect(() => {
-    console.log('useEffect (with deps) -- clickCount', clickCount);
-  }, [clickCount]);
+    console.log('The memoizedFunction is changed');
+  }, [memoizedFunction]);
   
   useEffect(() => {
-    console.log('useEffect (without deps)-- clickCount', clickCount);
-  });
+    console.log('The generalFunction is changed');
+  }, [generalFunction]);
   
   return (
-    <>
-      <button onClick={forceReRender}>Force Re-render</button>
-      <button onClick={addCount}>Add count</button>
-      <span>clockCount : {clickCount}</span>
-    </>
+    <button onClick={forceReRender}>Force Re-render</button>
   );
 }
 
