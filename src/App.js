@@ -1,35 +1,18 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useRef} from 'react';
 
 function App() {
   
-  const memoizedFunction = useCallback(() => {
+  const inputRef = useRef(null);
   
+  const handleClick = useCallback(() => {
+    inputRef.current.focus();
   }, []);
-  
-  const generalFunction = () => {
-  
-  };
-  
-  const forceReRender = useForceReRender();
-  
-  useEffect(() => {
-    console.log('The memoizedFunction is changed');
-  }, [memoizedFunction]);
-  
-  useEffect(() => {
-    console.log('The generalFunction is changed');
-  }, [generalFunction]);
   
   return (
-    <button onClick={forceReRender}>Force Re-render</button>
+    <>
+      <input ref={inputRef} placeholder="Please enter your name"/>
+      <button onClick={handleClick}>Force the input</button>
+    </>
   );
 }
-
-function useForceReRender() {
-  const [, setBool] = useState(false);
-  return useCallback(() => {
-    setBool(bool => !bool);
-  }, []);
-}
-
 export default App;
