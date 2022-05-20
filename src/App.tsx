@@ -1,25 +1,38 @@
-import React, {useReducer} from 'react';
+import React, {forwardRef, Ref, useCallback, useImperativeHandle, useRef} from 'react';
 
-function reducer(prevState: {count: number}, action: { type: 'increase' | 'decrease' }) {
-  switch (action.type) {
-    case 'decrease':
-      return {count: prevState.count - 1};
-    case 'increase':
-      return {count: prevState.count + 1};
-    default:
-      return prevState;
-  }
-}
-
-function App() {
-  const [state, dispatch] = useReducer(reducer, {count: 0});
+export default function App() {
+  
+  const inputRef = useRef<Method>();
+  
+  const focus = useCallback(() => {
+    inputRef.current.focus();
+  }, []);
   
   return (
     <>
-      <h2>value = {state.count}</h2>
-      <button onClick={() => dispatch({type: 'increase'})}>Increase</button>
-      <button onClick={() => dispatch({type: 'decrease'})}>decrease</button>
+      <ChildComponent ref={inputRef}/>
+      <button onClick={focus}>Focus the input</button>
     </>
   );
 }
-export default App;
+
+interface Method {
+  focus: () => void;
+}
+
+const ChildComponent = forwardRef(function (props: {}, ref: Ref<Method>) {
+  
+  const inputRef = useRef<HTMLInputElement>(null);
+  
+  const focusTheInput = useCallback(() => {
+    inputRef.current.focus();
+  }, []);
+  
+  useImperativeHandle<Method, Method>(ref, () => ({
+    focus: focusTheInput
+  }));
+  
+  return (
+    <input ref={inputRef}/>
+  );
+});
