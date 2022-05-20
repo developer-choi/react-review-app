@@ -4,9 +4,10 @@
     "target": "es5",
     "sourceMap": true,
       "esModuleInterop": true,
-      "jsx": "react"
+      "jsx": "react",
+    "strict": true
   },
-    "exclude": [
+  "exclude": [
     "node_modules"
   ]
 }

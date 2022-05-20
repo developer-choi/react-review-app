@@ -2,10 +2,10 @@ import React, {forwardRef, Ref, useCallback, useImperativeHandle, useRef} from '
 
 export default function App() {
   
-  const inputRef = useRef<Method>();
+  const inputRef = useRef<Method>(null);
   
   const focus = useCallback(() => {
-    inputRef.current.focus();
+    inputRef.current?.focus();
   }, []);
   
   return (
@@ -25,7 +25,7 @@ const ChildComponent = forwardRef(function (props: {}, ref: Ref<Method>) {
   const inputRef = useRef<HTMLInputElement>(null);
   
   const focusTheInput = useCallback(() => {
-    inputRef.current.focus();
+    inputRef.current?.focus();
   }, []);
   
   useImperativeHandle<Method, Method>(ref, () => ({
