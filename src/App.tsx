@@ -1,38 +1,21 @@
-import React, {forwardRef, Ref, useCallback, useImperativeHandle, useRef} from 'react';
+import React from 'react';
 
 export default function App() {
-  
-  const inputRef = useRef<Method>(null);
-  
-  const focus = useCallback(() => {
-    inputRef.current?.focus();
-  }, []);
-  
   return (
-    <>
-      <ChildComponent ref={inputRef}/>
-      <button onClick={focus}>Focus the input</button>
-    </>
+    <div>
+      <Todo content="할일1"/>
+      <Todo content="할일2"/>
+      <Todo content="할일3"/>
+    </div>
   );
 }
 
-interface Method {
-  focus: () => void;
+interface TodoProps {
+  content: string;
 }
 
-const ChildComponent = forwardRef(function (props: {}, ref: Ref<Method>) {
-  
-  const inputRef = useRef<HTMLInputElement>(null);
-  
-  const focusTheInput = useCallback(() => {
-    inputRef.current?.focus();
-  }, []);
-  
-  useImperativeHandle<Method, Method>(ref, () => ({
-    focus: focusTheInput
-  }));
-  
+function Todo({content}: TodoProps) {
   return (
-    <input ref={inputRef}/>
+    <span>{content}</span>
   );
-});
+}
